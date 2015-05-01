@@ -36,7 +36,7 @@ public class FeedAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-
+            //
         }
         return convertView;
     }

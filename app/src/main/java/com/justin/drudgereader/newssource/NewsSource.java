@@ -1,18 +1,20 @@
 package com.justin.drudgereader.newssource;
 
+import java.io.Serializable;
+
 /**
  * Created by Justin on 5/1/2015.
  */
-public class Source {
+public class NewsSource implements Serializable {
     private String title;
     private String strUrl;
 
-    public Source() {
+    public NewsSource() {
         title = "Google";
         strUrl = "http://www.google.com";
     }
 
-    public Source(String title, String strUrl) {
+    public NewsSource(String title, String strUrl) {
         this.title = title;
         this.strUrl = strUrl;
     }

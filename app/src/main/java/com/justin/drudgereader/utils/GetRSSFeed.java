@@ -25,9 +25,11 @@ public class GetRSSFeed extends AsyncTask<Void, Void, List<String>> {
 
     private Context context;
     private URL url;
+    private String strUrl;
 
     public GetRSSFeed(Context context, String strUrl) throws MalformedURLException {
         this.context = context;
+        this.strUrl = strUrl;
         url = new URL(strUrl);
     }
 
@@ -35,7 +37,7 @@ public class GetRSSFeed extends AsyncTask<Void, Void, List<String>> {
     protected List<String> doInBackground(Void... voids) {
         List<String> result = null;
         try {
-            String feed = getAndroidPitRssFeed();
+            String feed = getAndroidPitRssFeed(strUrl);
             result = parse(feed);
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
@@ -151,11 +153,11 @@ public class GetRSSFeed extends AsyncTask<Void, Void, List<String>> {
 //        }
     }
 
-    private String getAndroidPitRssFeed() throws IOException {
+    private String getAndroidPitRssFeed(String strUrl) throws IOException {
         InputStream in = null;
         String rssFeed = null;
         try {
-            URL url = new URL("http://www.reuters.com/rssFeed/technologyNews");
+            URL url = new URL(strUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             in = conn.getInputStream();
             ByteArrayOutputStream out = new ByteArrayOutputStream();

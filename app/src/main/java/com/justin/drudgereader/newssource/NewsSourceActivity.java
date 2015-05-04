@@ -9,13 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.justin.drudgereader.R;
 import com.justin.drudgereader.SingleActivity;
+import com.justin.drudgereader.article.Article;
 import com.justin.drudgereader.utils.GetRSSFeed;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,10 +66,11 @@ public class NewsSourceActivity extends SingleActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_news_source, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_news_source, container, false);
 
             NewsSource ns = (NewsSource) getActivity().getIntent().getSerializableExtra("site");
             final String url = ns.getStrUrl();
+            Log.d("Url", url);
 
 //            List<String> feed = getActivity().getIntent().getStringArrayListExtra("feed");
 //            if (feed != null) {
@@ -78,10 +83,37 @@ public class NewsSourceActivity extends SingleActivity {
                     protected void onPostExecute(List<String> rssFeed) {
                         super.onPostExecute(rssFeed);
 
-                        ArrayList<String> feed = new ArrayList<String>(rssFeed);
+                        final ArrayList<String> feed = new ArrayList<String>(rssFeed);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                android.R.layout.simple_list_item_1,
+                                android.R.id.text1,
+                                feed);
+
+//                        ListView lv = (ListView) getActivity().findViewById(android.R.id.list);
+//                        lv.setAdapter(adapter);
+//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                String url = feed.get(position);
+//                                Log.d("Url", url);
+//                            }
+//                        });
+
+                        WebViewClient client = new WebViewClient() {
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                super.shouldOverrideUrlLoading(view, url);
+
+                                return true;
+                            }
+                        };
+
+                        WebView webView = (WebView) rootView.findViewById(R.id.web_view);
+                        webView.loadUrl(url);
+                        webView.setWebViewClient(client);
                     }
                 }.execute();
-            } catch (MalformedURLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return rootView;

@@ -72,50 +72,19 @@ public class NewsSourceActivity extends SingleActivity {
             final String url = ns.getStrUrl();
             Log.d("Url", url);
 
-//            List<String> feed = getActivity().getIntent().getStringArrayListExtra("feed");
-//            if (feed != null) {
-//                Toast.makeText(getActivity(), "You\'ve got it!", Toast.LENGTH_SHORT).show();
-//            }
-            try {
-                new GetRSSFeed(getActivity(), url) {
+            WebViewClient client = new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    super.shouldOverrideUrlLoading(view, url);
 
-                    @Override
-                    protected void onPostExecute(List<String> rssFeed) {
-                        super.onPostExecute(rssFeed);
+                    return true;
+                }
+            };
 
-                        final ArrayList<String> feed = new ArrayList<String>(rssFeed);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_list_item_1,
-                                android.R.id.text1,
-                                feed);
+            WebView webView = (WebView) rootView.findViewById(R.id.web_view);
+            webView.loadUrl(url);
+            webView.setWebViewClient(client);
 
-//                        ListView lv = (ListView) getActivity().findViewById(android.R.id.list);
-//                        lv.setAdapter(adapter);
-//                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                String url = feed.get(position);
-//                                Log.d("Url", url);
-//                            }
-//                        });
-
-                        WebViewClient client = new WebViewClient() {
-                            @Override
-                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                                super.shouldOverrideUrlLoading(view, url);
-
-                                return true;
-                            }
-                        };
-
-                        WebView webView = (WebView) rootView.findViewById(R.id.web_view);
-                        webView.loadUrl(url);
-                        webView.setWebViewClient(client);
-                    }
-                }.execute();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             return rootView;
         }
     }

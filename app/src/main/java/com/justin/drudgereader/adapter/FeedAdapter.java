@@ -59,7 +59,7 @@ public class FeedAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.source_view, parent, false);
 
             holder.tvTitle = (TextView) convertView.findViewById(R.id.title);
-            holder.tvSubtitle = (TextView) convertView.findViewById(R.id.subtitle);
+//            holder.tvSubtitle = (TextView) convertView.findViewById(R.id.subtitle);
 
             convertView.setTag(holder);
         } else {
@@ -67,7 +67,7 @@ public class FeedAdapter extends BaseAdapter {
         }
 
         holder.tvTitle.setText(source.getTitle());
-        holder.tvSubtitle.setText(source.getStrUrl());
+//        holder.tvSubtitle.setText(source.getStrUrl());
         return convertView;
     }
 }

@@ -3,14 +3,12 @@ package com.justin.drudgereader.feed;
 import android.content.Intent;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,11 +17,8 @@ import com.justin.drudgereader.SingleActivity;
 import com.justin.drudgereader.adapter.FeedAdapter;
 import com.justin.drudgereader.newssource.NewsSourceActivity;
 import com.justin.drudgereader.newssource.NewsSource;
-import com.justin.drudgereader.utils.GetRSSFeed;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeActivity extends SingleActivity {
@@ -31,28 +26,6 @@ public class HomeActivity extends SingleActivity {
     @Override
     public android.app.Fragment createFragment() {
         return new FeedFragment();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -72,10 +45,13 @@ public class HomeActivity extends SingleActivity {
             View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
             final ArrayList<NewsSource> sites = new ArrayList<NewsSource>();
-            sites.add(new NewsSource("CNN", "http://rss.cnn.com/rss/edition.rss"));
-            sites.add(new NewsSource("Drudge Report", "http://www.drudgereportfeed.com/"));
-            sites.add(new NewsSource("NBC", "http://feeds.nbcnews.com/feeds/topstories"));
-            sites.add(new NewsSource("Google News", "https://news.google.com/?output=rss"));
+            sites.add(new NewsSource("Articles", getActivity().getString(R.string.articles), getActivity().getString(R.string.key_articles)));
+            sites.add(new NewsSource("Breaking News", getString(R.string.breaking_news), getString(R.string.key_breaking_news)));
+            sites.add(new NewsSource("Best Selling Books", getString(R.string.best_selling_books), getString(R.string.key_best_selling_books)));
+            sites.add(new NewsSource("Book Reviews", getString(R.string.book_reviews), getString(R.string.key_book_reviews)));
+            sites.add(new NewsSource("Census", getString(R.string.census), getString(R.string.key_census)));
+            sites.add(new NewsSource("Movie Reviews", getString(R.string.movie_reviews), getString(R.string.key_movie_reviews)));
+            sites.add(new NewsSource("Music Reviews", getString(R.string.music_reviews), getString(R.string.key_music_reviews)));
 
             ListView lv = (ListView) rootView.findViewById(android.R.id.list);
 //            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sources);
@@ -84,25 +60,9 @@ public class HomeActivity extends SingleActivity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//                    String url = "";
-//                    switch (position) {
-//                        case 0:
-//                            url = "http://rss.cnn.com/rss/edition.rss";
-//                            break;
-//                        case 1:
-//                            url = "http://www.drudgereportfeed.com/";
-//                            break;
-//                        case 2:
-//                            url = "http://feeds.nbcnews.com/feeds/topstories";
-//                            break;
-//                        case 3:
-//                            url = "https://news.google.com/?output=rss";
-//                            break;
-//                    }
 
                     NewsSource ns = sites.get(position);
                     final String url = ns.getStrUrl();
-                    GetRSSFeed feed;
                     Toast.makeText(getActivity(), url, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), NewsSourceActivity.class);
                     intent.putExtra("site", ns);

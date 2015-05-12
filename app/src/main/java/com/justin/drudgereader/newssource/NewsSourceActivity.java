@@ -11,17 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.justin.drudgereader.R;
 import com.justin.drudgereader.SingleActivity;
-import com.justin.drudgereader.article.Article;
-import com.justin.drudgereader.utils.GetRSSFeed;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NewsSourceActivity extends SingleActivity {
     @Override
@@ -31,28 +23,6 @@ public class NewsSourceActivity extends SingleActivity {
         NewsSource ns = (NewsSource) getIntent().getSerializableExtra("site");
         bar.setTitle(ns.getTitle());
         return new NewsSourceFragment();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_news_source, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**

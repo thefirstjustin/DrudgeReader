@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="base_url">http://api.usatoday.com/</string>
+    <string name="open">open/</string>
+
+    <string name="articles">articles/topnews?api_key=</string>
+    <string name="breaking_news">breaking?api_key=</string>
+    <string name="best_selling_books">bestsellers/books?api_key=</string>
+    <string name="book_reviews">reviews/books?api_key=</string>
+    <string name="census">census?api_key=</string>
+    <string name="movie_reviews">reviews/movies?api_key=</string>
+    <string name="music_reviews">reviews/music?api_key=</string>
+    <string name="snapshots">snapshots?api_key=</string>
+    <string name="sports_salaries">salaries?api_key=</string>
+</resources>

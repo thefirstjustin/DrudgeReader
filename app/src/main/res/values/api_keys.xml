@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key_articles">tfcwep6djevx6rfdd4da3qp9</string>
+    <string name="key_breaking_news">fxsz3nmwegnmptkh93wwcjzk</string>
+    <string name="key_best_selling_books">4e4tbuh4jq3advcrynxewyec</string>
+    <string name="key_book_reviews">9bm924zkqxe3vwvwybewmzne</string>
+    <string name="key_census">rvwbasjd66nk4sktfbqz4q3y</string>
+    <string name="key_movie_reviews">9wu3n65j5n32nxd7q995fkbr</string>
+    <string name="key_music_reviews">smsjun7u6t7pusr5r7skaccq</string>
+    <string name="key_snapshots">p769gez8twnht7sa6jykpkmu</string>
+    <string name="key_sports_salaries">ju3fp2sxmjnk5bkqzqxw6jt4</string>
+</resources>

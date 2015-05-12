@@ -9,14 +9,10 @@ public class NewsSource implements Serializable {
     private String title;
     private String strUrl;
 
-    public NewsSource() {
-        title = "Google";
-        strUrl = "http://www.google.com";
-    }
-
-    public NewsSource(String title, String strUrl) {
+    public NewsSource(String title, String strUrlFragment, String apiKey) {
         this.title = title;
-        this.strUrl = strUrl;
+
+        strUrl = "http://api.usatoday.com/open/" + strUrlFragment + apiKey + "&encoding=json";
     }
 
     public String getTitle() {

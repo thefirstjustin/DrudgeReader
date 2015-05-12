@@ -14,6 +14,12 @@ import android.webkit.WebViewClient;
 
 import com.justin.drudgereader.R;
 import com.justin.drudgereader.SingleActivity;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class NewsSourceActivity extends SingleActivity {
     @Override
@@ -41,6 +47,20 @@ public class NewsSourceActivity extends SingleActivity {
             NewsSource ns = (NewsSource) getActivity().getIntent().getSerializableExtra("site");
             final String url = ns.getStrUrl();
             Log.d("Url", url);
+
+            Networking.getNewsFeed(url, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+
+                    try {
+                        JSONArray arr = response.getJSONArray("stories");
+                        Log.d("Stories", arr.toString());
+                    } catch(JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             WebViewClient client = new WebViewClient() {
                 @Override

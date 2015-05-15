@@ -31,11 +31,10 @@ public class ArticleActivity extends SingleActivity {
 
     @Override
     public void onBackPressed() {
-        if (articleFragment.getLinkCounter() != 0) {
-            articleFragment.decreaseLinkCounter();
-            articleFragment.reloadLastUrl();
-        } else if (articleFragment.getLinkCounter() < 1){
+        try {
             super.onBackPressed();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 
@@ -44,7 +43,7 @@ public class ArticleActivity extends SingleActivity {
      */
     public static class ArticleFragment extends Fragment {
 
-        protected int linkCounter = 1;
+        protected int linkCounter;
         protected WebView webView;
         protected WebViewClient client;
         protected ArrayList<String> urls;
@@ -57,6 +56,8 @@ public class ArticleActivity extends SingleActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_article, container, false);
 
+            linkCounter = 0;
+
             String url = getActivity().getIntent().getStringExtra("url");
             Log.d("Url", url);
 
@@ -67,9 +68,13 @@ public class ArticleActivity extends SingleActivity {
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     super.shouldOverrideUrlLoading(view, url);
 
-                    view.loadUrl(url);
-                    urls.add(url);
-                    linkCounter++;
+//                    view.loadUrl(url);
+//                    urls.add(url);
+//                    linkCounter++;
+
+                    if (url.contains("usatoday")) {
+                        view.loadUrl(url);
+                    }
 
                     return true;
                 }
@@ -95,9 +100,19 @@ public class ArticleActivity extends SingleActivity {
             urls.remove(urls.size() - 1);
             Log.d("Urls size", String.valueOf(urls.size()));
 
-            String link = urls.get((urls.size()) - 1);
+            String link = "";
+            try {
+                if (urls.size() > 0) {
+                    link = urls.get((urls.size()) - 1);
+                } else {
+                    link = urls.get(0);
+                }
 
-            client.shouldOverrideUrlLoading(webView, link);
+                client.shouldOverrideUrlLoading(webView, link);
+            } catch (IndexOutOfBoundsException e) {
+                Log.e("WebView failure", e.toString());
+                getActivity().finish();
+            }
         }
     }
 }

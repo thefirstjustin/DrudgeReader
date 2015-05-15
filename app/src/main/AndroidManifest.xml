@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name=".article.ArticleActivity"
-            android:label="@string/title_activity_article" >
+            android:label="@string/title_activity_article"
+            android:parentActivityName=".newssource.NewsSourceActivity">
         </activity>
         <activity
             android:name=".newssource.NewsSourceActivity"
